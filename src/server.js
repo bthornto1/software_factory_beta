@@ -18,3 +18,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     console.log(`Listening on http://localhost:${port}`);
   });
 }
+
+// Vercel serverless entrypoint (imported, not executed directly).
+export default createApp();
