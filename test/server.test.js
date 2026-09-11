@@ -28,3 +28,18 @@ test("unknown route returns 404", async () => {
     server.close();
   }
 });
+
+test("GET /health returns ok JSON", async () => {
+  const server = createApp();
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+
+  try {
+    const res = await fetch(`http://localhost:${port}/health`);
+    assert.equal(res.status, 200);
+    assert.equal(res.headers.get("content-type"), "application/json");
+    assert.deepEqual(await res.json(), { status: "ok" });
+  } finally {
+    server.close();
+  }
+});
