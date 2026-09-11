@@ -12,6 +12,11 @@ export function createApp() {
       res.end(JSON.stringify({ status: "ok" }));
       return;
     }
+    if (req.method === "GET" && req.url === "/version") {
+      res.writeHead(200, { "content-type": "application/json" });
+      res.end(JSON.stringify({ version: "0.1.0" }));
+      return;
+    }
     res.writeHead(404, { "content-type": "text/plain" });
     res.end("Not found");
   });
