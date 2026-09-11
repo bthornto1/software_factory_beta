@@ -43,3 +43,18 @@ test("GET /health returns ok JSON", async () => {
     server.close();
   }
 });
+
+test("GET /version returns version JSON", async () => {
+  const server = createApp();
+  await new Promise((resolve) => server.listen(0, resolve));
+  const { port } = server.address();
+
+  try {
+    const res = await fetch(`http://localhost:${port}/version`);
+    assert.equal(res.status, 200);
+    assert.equal(res.headers.get("content-type"), "application/json");
+    assert.deepEqual(await res.json(), { version: "0.1.0" });
+  } finally {
+    server.close();
+  }
+});
